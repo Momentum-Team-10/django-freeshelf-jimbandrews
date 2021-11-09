@@ -15,5 +15,5 @@ class Book(models.Model):
     title = models.CharField(max_length=500)
     author = models.CharField(max_length=500)
     description = models.TextField()
-    url = models.CharField(max_length=500)
+    url = models.CharField(max_length=500, unique=True)
     created_at = DateTimeField(auto_now_add=True)
