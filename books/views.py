@@ -1,14 +1,22 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from .models import Book
 from .forms import BookForm
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
+def homepage(request):
+    if request.user.is_authenticated:
+        return redirect("book_index")
+    return render(request, "books/homepage.html")
+
+
 def book_index(request):
     books = Book.objects.all()
     return render(request, "books/book_index.html", {"books": books})
 
 
+@login_required
 def add_book(request):
     if request == 'GET':
         form = BookForm()
@@ -16,7 +24,7 @@ def add_book(request):
         form = BookForm(data=request.POST)
         if form.is_valid():
             form.save()
-            return redirect(to="book_index")
+            return redirect(to="home")
     return render(request, 'books/add_book.html', {"form": form})
 
 
@@ -33,7 +41,7 @@ def edit_book(request, pk):
         form = BookForm(data=request.POST, instance=book)
         if form.is_valid():
             form.save()
-            return redirect(to="book_index")
+            return redirect(to="home")
     return render(request, 'books/edit_book.html', {"form": form, "book": book})
 
 
@@ -41,5 +49,5 @@ def delete_book(request, pk):
     book = get_object_or_404(Book, pk=pk)
     if request.method == 'POST':
         book.delete()
-        return redirect(to="book_index")
+        return redirect(to="home")
     return render(request, 'books/delete_book.html', {"book": book})

@@ -22,10 +22,11 @@ import debug_toolbar
 urlpatterns = [
     path("admin/", admin.site.urls),
     path('__debug__/', include(debug_toolbar.urls)),
-    path("", views.book_index, name="book_index"),
+    path("", views.homepage, name="home"),
+    path("books/", views.book_index, name="book_index"),
     path("books/add_book/", views.add_book, name="add_book"),
     path("books/<int:pk>/", views.view_book, name="view_book"),
     path("books/<int:pk>/edit/", views.edit_book, name="edit_book"),
     path("books/<int:pk>/delete/", views.delete_book, name="delete_book"),
-    path('accounts/', include('registration.backends.default.urls')),
+    path('accounts/', include('registration.backends.simple.urls')),
 ]
