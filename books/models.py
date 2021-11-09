@@ -19,14 +19,8 @@ class Book(models.Model):
     created_at = DateTimeField(auto_now_add=True)
     cover_image = models.CharField(max_length=500, null=True, blank=True)
 
-
-class Author(models.Model):
-    name = models.CharField(max_length=250)
-    birthplace = models.CharField(max_length=250, null=True, blank=True)
-    birthdate = models.DateField(null=True, blank=True)
-
     def __repr__(self):
-        return f"<Author name={self.name}>"
-    
+        return f"<Book Title={self.title} Author Name={self.author}>"
+
     def __str__(self):
-        return self.name
+        return self.title
