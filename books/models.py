@@ -17,3 +17,4 @@ class Book(models.Model):
     description = models.TextField()
     url = models.CharField(max_length=500, unique=True)
     created_at = DateTimeField(auto_now_add=True)
+    cover_image = models.CharField(max_length=500, null=True, blank=True)
