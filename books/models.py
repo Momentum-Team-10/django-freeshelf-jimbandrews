@@ -18,3 +18,15 @@ class Book(models.Model):
     url = models.CharField(max_length=500, unique=True)
     created_at = DateTimeField(auto_now_add=True)
     cover_image = models.CharField(max_length=500, null=True, blank=True)
+
+
+class Author(models.Model):
+    name = models.CharField(max_length=250)
+    birthplace = models.CharField(max_length=250, null=True, blank=True)
+    birthdate = models.DateField(null=True, blank=True)
+
+    def __repr__(self):
+        return f"<Author name={self.name}>"
+    
+    def __str__(self):
+        return self.name
