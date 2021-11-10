@@ -18,9 +18,21 @@ class Book(models.Model):
     url = models.CharField(max_length=500, unique=True)
     created_at = DateTimeField(auto_now_add=True)
     cover_image = models.CharField(max_length=500, null=True, blank=True)
+    categories = models.ManyToManyField('Category', related_name='books')
 
     def __repr__(self):
         return f"<Book Title={self.title} Author Name={self.author}>"
 
     def __str__(self):
         return self.title
+
+
+class Category(models.Model):
+    name = models.CharField(max_length=75)
+    slug = models.SlugField(max_length=75, null=True, blank=True)
+
+    def __repr__(self):
+        return f"<Category={self.name}>"
+
+    def __str__(self):
+        return self.name
