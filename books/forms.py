@@ -5,14 +5,7 @@ from .models import Book, Category
 class BookForm(forms.ModelForm):
     class Meta:
         model = Book
-        fields = [
-            'title',
-            'author',
-            'url',
-            'cover_image',
-            'description',
-            'categories'
-        ]
+        exclude = ['created_at']
 
 
 class CategoryForm(forms.ModelForm):

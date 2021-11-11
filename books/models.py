@@ -19,7 +19,9 @@ class Book(models.Model):
     url = models.CharField(max_length=500, unique=True, null=True, blank=True)
     created_at = DateTimeField(auto_now_add=True)
     cover_image = models.CharField(max_length=500, null=True, blank=True)
-    categories = models.ManyToManyField('Category', related_name='books')
+    categories = models.ManyToManyField(
+        'Category', related_name='books', blank=True
+    )
 
     def __repr__(self):
         return f"<Book Title={self.title} Author Name={self.author}>"

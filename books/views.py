@@ -1,8 +1,8 @@
 from django.shortcuts import get_object_or_404, render, redirect
-from .models import Book
+from .models import Book, Category
 from .forms import BookForm, CategoryForm
 from django.contrib.auth.decorators import login_required
-from django.template.defaultfilters import slugify
+from django.urls import include
 
 
 # Create your views here.
@@ -19,7 +19,7 @@ def book_index(request):
 
 @login_required
 def add_book(request):
-    if request == 'GET':
+    if request.method == 'GET':
         form = BookForm()
     else:
         form = BookForm(data=request.POST)
@@ -36,13 +36,13 @@ def view_book(request, pk):
 
 def edit_book(request, pk):
     book = get_object_or_404(Book, pk=pk)
-    if request == 'GET':
-        form = BookForm(instance=book)
-    else:
+    if request.method == 'POST':
         form = BookForm(data=request.POST, instance=book)
         if form.is_valid():
             form.save()
-            return redirect(to="home")
+            return redirect("home")
+    else:
+        form = BookForm(instance=book)
     return render(
         request,
         'books/edit_book.html',
@@ -67,3 +67,9 @@ def add_category(request):
             form.save()
             return redirect(to="home")
     return render(request, 'books/add_category.html', {'form': form})
+
+
+def view_category(request, slug):
+    category = get_object_or_404(Category, slug=slug)
+    books = category.books.all()
+    return render(request, 'books/view_category.html', {"category": category, "books": books})
