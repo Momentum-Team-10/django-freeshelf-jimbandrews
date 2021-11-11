@@ -1,7 +1,8 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from .models import Book
-from .forms import BookForm
+from .forms import BookForm, CategoryForm
 from django.contrib.auth.decorators import login_required
+from django.template.defaultfilters import slugify
 
 
 # Create your views here.
@@ -42,7 +43,11 @@ def edit_book(request, pk):
         if form.is_valid():
             form.save()
             return redirect(to="home")
-    return render(request, 'books/edit_book.html', {"form": form, "book": book})
+    return render(
+        request,
+        'books/edit_book.html',
+        {"form": form, "book": book}
+    )
 
 
 def delete_book(request, pk):
@@ -51,3 +56,14 @@ def delete_book(request, pk):
         book.delete()
         return redirect(to="home")
     return render(request, 'books/delete_book.html', {"book": book})
+
+
+def add_category(request):
+    if request == 'GET':
+        form = CategoryForm()
+    else:
+        form = CategoryForm(data=request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect(to="home")
+    return render(request, 'books/add_category.html', {'form': form})
