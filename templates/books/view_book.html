@@ -1,5 +1,11 @@
 {% extends "base.html" %}
 
+{% block title %}{{ block.title }}{% endblock title %}
+
+{% block navbar %}
+<a class="link dim white dib mr3 fr" href="{% url 'auth_logout' %}" title="Logout">Log Out</a>
+{% endblock navbar %}
+
 {% block content %}
 <h1>{{ book.title }}</h1>
 {% if book.cover_image %}

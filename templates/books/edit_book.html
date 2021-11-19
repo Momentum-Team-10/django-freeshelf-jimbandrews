@@ -1,5 +1,11 @@
 {% extends "base.html" %}
 
+{% block title %}Edit Book{% endblock title %}
+
+{% block navbar %}
+<a class="link dim white dib mr3 fr" href="{% url 'auth_logout' %}" title="Logout">Log Out</a>
+{% endblock navbar %}
+
 {% block content %}
 <h1>Edit {{ book.title }}</h1>
 
